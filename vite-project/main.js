@@ -1,29 +1,31 @@
 import "./style.css";
 
+var userSum = 0;
+var dealerSum = 0;
+
+var deck = [];
+var win = false;
+var lose = false;
+
 const DOMSelectors = {
-  button: document.querySelector(".startBtn"),
-  title: document.querySelector(".title"),
-  mainDisplay: document.querySelector(".mainBody"),
-  getCard: document.querySelector(".getCard"),
+  hit: document.querySelector(".hit"),
+  stand: document.querySelector(".stand"),
+  winLose: document.querySelector(".userHand"),
 };
 
-function getGame() {
-  DOMSelectors.button.addEventListener("click", function () {
-    DOMSelectors.mainDisplay.innerHTML = "";
-    DOMSelectors.mainDisplay.insertAdjacentHTML(
-      "afterend",
-      `<button class="getCard">Get Card!</button>
-    <div class="dealHand">
-    <h2 class="text">Dealer's Hand</h2>
-    </div>
-    <div class="userHand">
-    <h2 class="text">Your Hand</h2>
-    </div>`
-    );
+function Lose() {
+  DOMSelectors.hit.addEventListener("click", function () {
+    if (userSum > 21) {
+      return (lose = true);
+    } else {
+      console.log("error");
+    }
   });
-
-  const getCard = document.querySelector(".getCard");
-  getCard.addEventListener("click", function () {
-    console.log("yes");
-  });
+  if ((lose = true)) {
+    DOMSelectors.winLose.insertAdjacentText("afterbegin", `You Lose!`);
+  } else {
+    console.log("error");
+  }
 }
+
+DOMSelectors.stand.addEventListener("click", console.log(lose));
