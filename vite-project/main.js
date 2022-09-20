@@ -85,6 +85,13 @@ DOMSelectors.hit.addEventListener("click", function () {
   const card = Deck.pop();
   const splitCard = card.split(`-`);
   const valueCard = splitCard[0];
+  /* if ( valueCard = isNaN) {
+    if(valueCard = "A"){
+      return  valueCard = 11
+    } if(valueCard = "J", "Q", "K"){
+      return valueCard = 10
+    }
+  } */
   DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
 });
 
