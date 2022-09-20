@@ -1,10 +1,10 @@
 import "./style.css";
 
-var userSum = 22;
+var userSum = 0;
 var dealerSum = 0;
 
-var win = false;
-var lose = false;
+var userAceCount = 0;
+var dealerAceCount = 0;
 
 const DOMSelectors = {
   hit: document.querySelector(".hit"),
@@ -12,48 +12,83 @@ const DOMSelectors = {
   userHand: document.querySelector(".userHand"),
 };
 
-function Lose() {
-  function clickLose() {
-    DOMSelectors.hit.addEventListener("click", function () {
-      if (userSum > 21) {
-        DOMSelectors.userHand.insertAdjacentText("afterend", `You Lose!`);
-      } else {
-        console.log("error");
-      }
-    });
+window.onload = function () {
+  shuffle(Deck);
+  getHand();
+  getHand();
+};
+const Deck = [
+  "A-H",
+  "2-H",
+  "3-H",
+  "4-H",
+  "5-H",
+  "6-H",
+  "7-H",
+  "8-H",
+  "9-H",
+  "10-H",
+  "J-H",
+  "Q-H",
+  "K-H",
+  "A-C",
+  "2-C",
+  "3-C",
+  "4-C",
+  "5-C",
+  "6-C",
+  "7-C",
+  "8-C",
+  "9-C",
+  "10-C",
+  "J-C",
+  "Q-C",
+  "K-C",
+  "A-D",
+  "2-D",
+  "3-D",
+  "4-D",
+  "5-D",
+  "6-D",
+  "7-D",
+  "8-D",
+  "9-D",
+  "10-D",
+  "J-D",
+  "Q-D",
+  "K-D",
+  "A-S",
+  "2-S",
+  "3-S",
+  "4-S",
+  "5-S",
+  "6-S",
+  "7-S",
+  "8-S",
+  "9-S",
+  "10-S",
+  "J-S",
+  "Q-S",
+  "K-S",
+];
+
+function shuffle(Deck) {
+  for (var i = Deck.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = Deck[i];
+    Deck[i] = Deck[j];
+    Deck[j] = temp;
   }
-  clickLose();
 }
 
-Lose();
+DOMSelectors.hit.addEventListener("click", function () {
+  const card = Deck.pop();
+  const splitCard = card.split(`-`);
+  const valueCard = splitCard[0];
+  DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
+});
 
-const Deck = [];
-
-var deck1 = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-var deck2 = ["C", "H", "S", "D"];
-
-async function createDeck() {
-  try {
-    for (let i = 0; i < 1; i++) {
-      Deck.push(deck1);
-    }
-  } catch {
-    console.log("errror");
-  }
+function getHand() {
+  const card = Deck.pop();
+  DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
 }
-createDeck();
-
-console.log(Deck);
-/* function userLose() {
-  if ((lose = true)) {
-    DOMSelectors.winLose.insertAdjacentText("afterend", `You Lose!`);
-  } else {
-    console.log("error");
-  }
-}
-function userWin() {
-  if ((win = ture)) {
-    DOMSelectors.winLose.insertAdjacentText("afterend", `You Win!`);
-  }
-}
-*/
