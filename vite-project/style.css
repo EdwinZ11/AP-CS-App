@@ -82,3 +82,6 @@ button:focus-visible {
   width: 7rem;
   height: 13.5rem;
 }
+.mainBody{
+  flex-direction: column;
+}

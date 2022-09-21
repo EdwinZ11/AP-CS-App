@@ -9,13 +9,14 @@ var dealerAceCount = 0;
 const DOMSelectors = {
   hit: document.querySelector(".hit"),
   stand: document.querySelector(".stand"),
-  userHand: document.querySelector(".userHand"),
+  userHand: document.querySelector(".userText"),
+  dealerHand: document.querySelector(".dealerText"),
 };
 
 window.onload = function () {
   shuffle(Deck);
-  getHand();
-  getHand();
+  getUserHand();
+  getDealerHand();
 };
 const Deck = [
   "A-H",
@@ -83,19 +84,27 @@ function shuffle(Deck) {
 
 DOMSelectors.hit.addEventListener("click", function () {
   const card = Deck.pop();
-  const splitCard = card.split(`-`);
-  const valueCard = splitCard[0];
-  /* if ( valueCard = isNaN) {
-    if(valueCard = "A"){
-      return  valueCard = 11
-    } if(valueCard = "J", "Q", "K"){
-      return valueCard = 10
+  const splitCard = card.split("-");
+  var valueCard = splitCard[0];
+  if (isNaN(valueCard)) {
+    if (valueCard == "A") {
+      var valueCard = 11;
+    } else {
+      var valueCard = 10;
     }
-  } */
+  }
   DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
 });
 
-function getHand() {
-  const card = Deck.pop();
-  DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
+function getUserHand() {
+  for (var i = 0; i < 2; i++) {
+    const card = Deck.pop();
+    DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
+  }
+}
+function getDealerHand() {
+  for (var i = 0; i < 2; i++) {
+    const card = Deck.pop();
+    DOMSelectors.dealerHand.insertAdjacentText("afterend", `${card} `);
+  }
 }
