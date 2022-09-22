@@ -6,6 +6,8 @@ var dealerSum = 0;
 var userAceCount = 0;
 var dealerAceCount = 0;
 
+var canHit = true;
+
 const DOMSelectors = {
   hit: document.querySelector(".hit"),
   stand: document.querySelector(".stand"),
@@ -17,6 +19,8 @@ window.onload = function () {
   shuffle(Deck);
   getUserHand();
   getDealerHand();
+  hit();
+  stand();
 };
 const Deck = [
   "A-H",
@@ -82,29 +86,84 @@ function shuffle(Deck) {
   }
 }
 
-DOMSelectors.hit.addEventListener("click", function () {
-  const card = Deck.pop();
-  const splitCard = card.split("-");
-  var valueCard = splitCard[0];
-  if (isNaN(valueCard)) {
-    if (valueCard == "A") {
-      var valueCard = 11;
-    } else {
-      var valueCard = 10;
+function hit() {
+  DOMSelectors.hit.addEventListener("click", function () {
+    if (canHit === true) {
+      const card = Deck.pop();
+      const splitCard = card.split("-");
+      var valueCard = splitCard[0];
+      if (isNaN(valueCard)) {
+        if (valueCard == "A") {
+          var valueCard = 11;
+        } else {
+          var valueCard = 10;
+        }
+      }
+      userSum = +userSum + +valueCard;
+      if (userSum > 21) {
+        canHit = false;
+      }
+      console.log(userSum);
+      DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
     }
-  }
-  DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
-});
+  });
+}
 
 function getUserHand() {
   for (var i = 0; i < 2; i++) {
     const card = Deck.pop();
+    const splitCard = card.split("-");
+    var valueCard = splitCard[0];
+    if (isNaN(valueCard)) {
+      if (valueCard == "A") {
+        var valueCard = 11;
+      } else {
+        var valueCard = 10;
+      }
+    }
+    userSum = +userSum + +valueCard;
     DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
   }
 }
 function getDealerHand() {
   for (var i = 0; i < 2; i++) {
     const card = Deck.pop();
+    const splitCard = card.split("-");
+    var valueCard = splitCard[0];
+    if (isNaN(valueCard)) {
+      if (valueCard == "A") {
+        var valueCard = 11;
+      } else {
+        var valueCard = 10;
+      }
+    }
+    dealerSum = +dealerSum + +valueCard;
+    console.log(dealerSum);
     DOMSelectors.dealerHand.insertAdjacentText("afterend", `${card} `);
   }
+}
+
+function stand() {
+  DOMSelectors.stand.addEventListener("click", function () {
+    if (dealerSum < 17) {
+      const card = Deck.pop();
+      const splitCard = card.split("-");
+      var valueCard = splitCard[0];
+      if (isNaN(valueCard)) {
+        if (valueCard == "A") {
+          var valueCard = 11;
+        } else {
+          var valueCard = 10;
+        }
+      }
+      dealerSum = +dealerSum + +valueCard;
+      DOMSelectors.dealerHand.insertAdjacentText("afterend", `${card} `);
+    }
+    if (userSum > dealerSum && userSum <= 21) {
+      DOMSelectors.userHand.insertAdjacentText("afterend", "You Win!");
+    }
+    if (userSum < 21 && userSum < dealerSum && dealerSum > 21) {
+      DOMSelectors.userHand.insertAdjacentText("afterend", "You Win!");
+    }
+  });
 }
