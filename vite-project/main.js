@@ -7,6 +7,7 @@ var userAceCount = 0;
 var dealerAceCount = 0;
 
 var canHit = true;
+var canStand = true;
 
 const DOMSelectors = {
   hit: document.querySelector(".hit"),
@@ -164,21 +165,34 @@ function hit() {
 
 function stand() {
   DOMSelectors.stand.addEventListener("click", function () {
-    while (dealerSum < 17) {
-      dealerPart();
-      dealerHasAce();
+    if (canStand === true) {
+      while (dealerSum < 17) {
+        dealerPart();
+        dealerHasAce();
+      }
+      if (userSum > dealerSum && userSum <= 21) {
+        DOMSelectors.userHand.insertAdjacentText("afterend", "Y ou Win! ");
+      }
+      if (userSum < 21 && dealerSum > 21) {
+        DOMSelectors.userHand.insertAdjacentText("afterend", " You Win! ");
+      }
+      if (userSum > 21) {
+        DOMSelectors.userHand.insertAdjacentText(
+          "afterend",
+          " You Lose! Better Luck Next Time! "
+        );
+      }
+      if (userSum < dealerSum && dealerSum <= 21) {
+        DOMSelectors.userHand.insertAdjacentText(
+          "afterend",
+          " You Lose! Better Luck Next Time! "
+        );
+      }
+      if (userSum === dealerSum && userSum < 21) {
+        DOMSelectors.userHand.insertAdjacentText("afterend", " No one Wins ");
+      }
     }
-    if (userSum > dealerSum && userSum <= 21) {
-      DOMSelectors.userHand.insertAdjacentText("afterend", "You Win!");
-    }
-    if (userSum < 21 && dealerSum > 21) {
-      DOMSelectors.userHand.insertAdjacentText("afterend", "You Win!");
-    }
-    if (userSum > 21) {
-      DOMSelectors.userHand.insertAdjacentText("afterend", "You Lose!");
-    }
-    if (userSum < dealerSum && dealerSum <= 21) {
-      DOMSelectors.userHand.insertAdjacentText("afterend", "You Lose!");
-    }
+    canStand = false;
+    canHit = false;
   });
 }
