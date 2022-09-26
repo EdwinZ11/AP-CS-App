@@ -171,21 +171,21 @@ function stand() {
         dealerHasAce();
       }
       if (userSum > dealerSum && userSum <= 21) {
-        DOMSelectors.userHand.insertAdjacentText("afterend", "Y ou Win! ");
+        DOMSelectors.userHand.insertAdjacentText("afterend", "You Win! ");
       }
-      if (userSum < 21 && dealerSum > 21) {
+      if (userSum <= 21 && dealerSum > 21) {
         DOMSelectors.userHand.insertAdjacentText("afterend", " You Win! ");
       }
       if (userSum > 21) {
         DOMSelectors.userHand.insertAdjacentText(
           "afterend",
-          " You Lose! Better Luck Next Time! "
+          " Imagine Losing? "
         );
       }
       if (userSum < dealerSum && dealerSum <= 21) {
         DOMSelectors.userHand.insertAdjacentText(
           "afterend",
-          " You Lose! Better Luck Next Time! "
+          " Imagine Losing? "
         );
       }
       if (userSum === dealerSum && userSum < 21) {
