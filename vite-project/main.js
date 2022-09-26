@@ -92,13 +92,17 @@ function dealerPart() {
   var valueCard = splitCard[0];
   if (isNaN(valueCard)) {
     if (valueCard == "A") {
-      checkDealerAce();
+      dealerAceCount = +dealerAceCount + +1;
       var valueCard = 11;
     } else {
       var valueCard = 10;
     }
   }
   dealerSum = +dealerSum + +valueCard;
+  if (dealerSum > 21 && dealerAceCount > 1) {
+    dealerSum = +dealerSum - +10;
+    dealerAceCount = +dealerAceCount - +1;
+  }
   DOMSelectors.dealerHand.insertAdjacentText("afterend", `${card} `);
 }
 
@@ -119,6 +123,21 @@ function userPart() {
   DOMSelectors.userHand.insertAdjacentText("afterend", `${card} `);
 }
 
+function userHasAce() {
+  while (userSum >= 21 && userAceCount > 0) {
+    userSum = +userSum + -10;
+    userAceCount = +userAceCount + -1;
+    canHit = true;
+  }
+}
+
+function dealerHasAce() {
+  while (dealerSum >= 21 && dealerAceCount > 0) {
+    dealerSum = +dealerSum + -10;
+    dealerAceCount = +dealerAceCount + -1;
+  }
+}
+
 function getDealerHand() {
   for (var i = 0; i < 2; i++) {
     dealerPart();
@@ -131,11 +150,6 @@ function getUserHand() {
   }
 }
 
-function checkDealerAce() {
-  dealerAceCount = +1;
-  console.log(dealerAceCount);
-}
-
 function hit() {
   DOMSelectors.hit.addEventListener("click", function () {
     if (canHit === true) {
@@ -144,6 +158,7 @@ function hit() {
         canHit = false;
       }
     }
+    userHasAce();
   });
 }
 
@@ -151,6 +166,7 @@ function stand() {
   DOMSelectors.stand.addEventListener("click", function () {
     while (dealerSum < 17) {
       dealerPart();
+      dealerHasAce();
     }
     if (userSum > dealerSum && userSum <= 21) {
       DOMSelectors.userHand.insertAdjacentText("afterend", "You Win!");
