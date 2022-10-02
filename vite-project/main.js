@@ -173,7 +173,10 @@ function stand() {
       if (userSum > dealerSum && userSum <= 21) {
         DOMSelectors.userHand.insertAdjacentText("afterend", "You Win! ");
       }
-      if (userSum <= 21 && dealerSum > 21) {
+      if (userSum < 21 && dealerSum > 21) {
+        DOMSelectors.userHand.insertAdjacentText("afterend", " You Win! ");
+      }
+      if ((userSum = 21)) {
         DOMSelectors.userHand.insertAdjacentText("afterend", " You Win! ");
       }
       if (userSum > 21) {
